@@ -13,6 +13,7 @@ import * as Highcharts from 'highcharts';
 
 
 
+
 export class AppComponent {
   chart = new Chart()
   allData: APIData[] = []
@@ -21,7 +22,7 @@ export class AppComponent {
   options: string[] = []
   start: number = 0
   end: number = 99999999999999
-  dataset: string = "Companies"
+  dataset: string = "default"
   colors: string[] = [
     "Teal",
     "Coral",
@@ -69,17 +70,26 @@ export class AppComponent {
     let array: Highcharts.SeriesOptionsType[] = []
     let idx: number = 0
     this.options.forEach((i) => {
+      const defaultData = this.filteredData.filter(d => d.name === i).map(m => [Date.UTC(+m.date.split("-")[0], +m.date.split("-")[1], +m.date.split("-")[2]), m.quantity])
+
+      const quartersData = [1, 2, 3, 4].map(q => [`QTR-${q}`,defaultData.map(i => [this.getQuarterFromDate(i[0]), i[1]]).filter(i => i[0] === q).map(j => j[1]).reduce((acc, curr) => acc + curr, 0)])
+
+      const monthsData = [1, 2, 3, 4,5,6,7,8,9,10,11,12].map(q => [q,defaultData.map(i => [this.getMonthFromDate(i[0]), i[1]]).filter(i => i[0] === q).map(j => j[1]).reduce((acc, curr) => acc + curr, 0)])
+
       array.push(
         {
           name: i,
           type: "line",
           lineWidth: 2,
-          data: this.filteredData.filter(d => d.name === i).map(m => [Date.UTC(+m.date.split("-")[0],+m.date.split("-")[1],+m.date.split("-")[2]),m.quantity]),
+          data: this.dataset === "default" ? defaultData : this.dataset === "months" ?  monthsData : quartersData ,
           color: this.colors[idx]
         }
       )
       idx++
     })
+
+
+
     this.chart = new Chart({
       chart: {
         type: 'line'
@@ -94,7 +104,7 @@ export class AppComponent {
         valueDecimals: 2
       },
       xAxis: {
-        type: 'datetime',
+        type: this.dataset === "default" ? 'datetime' : 'category',
       },
       yAxis: [{
         title: {
@@ -108,9 +118,27 @@ export class AppComponent {
       series: array
     })
   }
+
+  getDataInQuarter() {
+
+  }
+
+// Function to get the quarter from a given timestamp
+getQuarterFromDate(timestamp: number): number {
+  const date = new Date(timestamp);
+  return Math.floor(date.getUTCMonth() / 3) + 1;
+}
+
+getMonthFromDate(timestamp: number): number {
+  const date = new Date(timestamp);
+  return Math.floor(date.getUTCMonth()) + 1;
+}
+
+
   applySelectedFilter(option: string) {
     this.dataset = option
-    this.generateData(this.dataset)
+
+    this.generateData("Companies")
     this.filterData()
     this.loadChart()
   }

@@ -45,13 +45,13 @@
       <div class='dataset'>
         <h4>Select Data Set</h4>
         <label>
-          <input type="radio" checked name="filter" (change)="applySelectedFilter('Companies')" /> Companies Data
+          <input type="radio" checked name="filter" (change)="applySelectedFilter('default')" /> Default
         </label>
         <label>
-          <input type="radio" name="filter" (change)="applySelectedFilter('Icecream')" /> Ice Cream Sales
+          <input type="radio" name="filter" (change)="applySelectedFilter('months')" /> Months
         </label>
         <label>
-          <input type="radio" name="filter" (change)="applySelectedFilter('Mobile')" /> Phone Selling
+          <input type="radio" name="filter" (change)="applySelectedFilter('quarter')" /> Quarter
         </label>
       </div>
       <hr>
@@ -72,7 +72,7 @@
       <div>
         <div>
           <label for="start">Start Date:</label>
-          <input (change)="onDateFilterChange(0,$event)" type="date" id="start">
+        <input (change)="onDateFilterChange(0,$event)" type="date" id="start">
         </div>
         <br>
         <div>

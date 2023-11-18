@@ -10,11 +10,11 @@ MIT
 @angular/router
 MIT
 
+angular-highcharts
+MIT
+
 highcharts
 https://www.highcharts.com/license
-
-highcharts-angular
-SEE LICENSE IN <LICENSE>
 
 rxjs
 Apache-2.0
