@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ChartModule } from 'angular-highcharts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
+    ChartModule,
     BrowserModule,
     AppRoutingModule
   ],

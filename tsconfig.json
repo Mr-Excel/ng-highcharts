@@ -24,6 +24,7 @@
       "dom"
     ]
   },
+  "types": ["faker"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
