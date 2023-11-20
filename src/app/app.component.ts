@@ -37,7 +37,7 @@ export class AppComponent {
     ],
     series: [],
   };
-  chart = new Chart()
+  chart = new Chart();
   allData: APIData[] = [];
   filteredData: APIData[] = [];
   selectedOptions: string[] = [];
@@ -45,8 +45,8 @@ export class AppComponent {
   start_date: number = 0;
   end_date: number = 99999999999999;
   dataset: string = 'default';
-  quarters: number[] = [1, 2, 3, 4]
-  months: number[] =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  quarters: number[] = [1, 2, 3, 4];
+  months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   // On Load Event Will trigger Once Loaded
   async ngOnInit() {
@@ -90,12 +90,12 @@ export class AppComponent {
   loadChart() {
     let array: Highcharts.SeriesOptionsType[] = [];
     this.options.forEach((option) => {
-
-      const data = this.dataset === 'default' ?
-        this.defaultDataSet(this.filteredData, option) :
-        this.dataset === 'months' ?
-          this.quarterWiseData(this.filteredData, option) :
-          this.monthWiseData(this.filteredData, option)
+      const data =
+        this.dataset === 'default'
+          ? this.defaultDataSet(this.filteredData, option)
+          : this.dataset === 'months'
+          ? this.quarterWiseData(this.filteredData, option)
+          : this.monthWiseData(this.filteredData, option);
 
       array.push({
         name: option,
@@ -107,7 +107,7 @@ export class AppComponent {
     });
 
     this.chart = new Chart({
-    ...this.chartOptions,
+      ...this.chartOptions,
       xAxis: {
         type: this.dataset === 'default' ? 'datetime' : 'category',
       },
@@ -176,17 +176,14 @@ export class AppComponent {
 
   // COnverstion String date to UTC
   convertStringDateToUTC(date: string) {
-    const [year, month, day] = date.split("-");
+    const [year, month, day] = date.split('-');
     return Date.UTC(+year, +month, +day);
   }
 
   defaultDataSet(data: APIData[], filterValue: string) {
     return data
-        .filter((d) => d.name === filterValue)
-        .map((m) => [
-          this.convertStringDateToUTC(m.date),
-          m.quantity,
-        ]);
+      .filter((d) => d.name === filterValue)
+      .map((m) => [this.convertStringDateToUTC(m.date), m.quantity]);
   }
 
   quarterWiseData(data: APIData[], filterValue: string) {
