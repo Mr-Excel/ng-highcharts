@@ -1,92 +1,85 @@
-<style>
-  .dataset{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-.main{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.main .data {
-  position: relative;
-  display: flex;
-  width: 100%;
-  gap: 10px
-}
-.main .data .filter{
-  position: relative;
-  width: 250px;
-}
-.main .data .filter .filter-selection-stats{
-  position: relative;
-}
-.main .data .charts{
-  position: relative;
-  width: calc(100% - 250px);
-}
-@media screen and (max-width: 600px) {
-  .main .data {
-    flex-direction: column;
-  }
-  .main .data .charts{
-    width: 100%;
-  }
-}
-</style>
 <div class="main" role="banner">
   <h1>Mobile Phones Selling Stats</h1>
   <hr />
 
-  <div class='data'>
-    <div class='filter'>
-      <div class='dataset'>
+  <div class="data">
+    <div class="filter">
+      <div class="dataset">
         <h4>Select Data Set</h4>
         <label>
-          <input type="radio" checked name="filter" (change)="applySelectedFilter('default')" /> Default
+          <input
+            type="radio"
+            checked
+            name="filter"
+            (change)="applySelectedFilter('default')"
+          />
+          Default
         </label>
         <label>
-          <input type="radio" name="filter" (change)="applySelectedFilter('months')" /> Months
+          <input
+            type="radio"
+            name="filter"
+            (change)="applySelectedFilter('months')"
+          />
+          Months
         </label>
         <label>
-          <input type="radio" name="filter" (change)="applySelectedFilter('quarter')" /> Quarter
+          <input
+            type="radio"
+            name="filter"
+            (change)="applySelectedFilter('quarter')"
+          />
+          Quarter
         </label>
       </div>
-      <hr>
-      <div class='filter-selection-stats'> <strong>Selected Products:</strong> {{selectedOptions.length }} </div>
-      <br>
-      <label class='us-none pointer'>
-        <input type="checkbox" [checked]="false" (change)="onSelectAllChange($event)" />
+      <hr />
+      <div class="filter-selection-stats">
+        <strong>Selected Products:</strong> {{ selectedOptions.length }}
+      </div>
+      <br />
+      <label class="us-none pointer">
+        <input
+          type="checkbox"
+          [checked]="false"
+          (change)="onSelectAllChange($event)"
+        />
         Select All
       </label>
-      <hr>
-      <div *ngFor="let product of options">
-        <label class='us-none pointer'>
-          <input type="checkbox" [checked]="selectedOptions.includes(product)" [value]="product" (change)="onProductChange($event)" />
-          {{ product }}
+      <hr />
+      <div *ngFor="let option of options">
+        <label class="us-none pointer">
+          <input
+            type="checkbox"
+            [checked]="selectedOptions.includes(option)"
+            [value]="option"
+            (change)="onProductChange($event)"
+          />
+          {{ option }}
         </label>
       </div>
-      <hr>
+      <hr />
       <div>
         <div>
           <label for="start">Start Date:</label>
-        <input (change)="onDateFilterChange(0,$event)" type="date" id="start">
+          <input
+            (change)="onDateFilterChange(0, $event)"
+            type="date"
+            id="start"
+          />
         </div>
-        <br>
+        <br />
         <div>
           <label for="end">End Date:</label>
-          <input (change)="onDateFilterChange(1,$event)" type="date" id="end">
+          <input
+            (change)="onDateFilterChange(1, $event)"
+            type="date"
+            id="end"
+          />
         </div>
       </div>
     </div>
-    <div class='charts'>
+    <div class="charts">
       <div [chart]="chart"></div>
     </div>
   </div>
 </div>
-
-<router-outlet>
-
-</router-outlet>
